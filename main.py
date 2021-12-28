@@ -2,14 +2,13 @@ import random
 import lyricsgenius
 import tweepy
 import os
-import config
 
 api_keys = {
-    'CONSUMER_KEY': os.getenv('CONSUMER_KEY', config.CONSUMER_KEY),
-    'CONSUMER_SECRET': os.getenv('CONSUMER_SECRET', config.CONSUMER_SECRET),
-    'ACCESS_TOKEN': os.getenv('ACCESS_TOKEN', config.ACCESS_TOKEN),
-    'ACCESS_SECRET': os.getenv('ACCESS_SECRET', config.ACCESS_SECRET),
-    'GENIUS_TOKEN': os.getenv('GENIUS_TOKEN', config.GENIUS_TOKEN)
+    'CONSUMER_KEY': os.getenv('CONSUMER_KEY'),
+    'CONSUMER_SECRET': os.getenv('CONSUMER_SECRET'),
+    'ACCESS_TOKEN': os.getenv('ACCESS_TOKEN'),
+    'ACCESS_SECRET': os.getenv('ACCESS_SECRET'),
+    'GENIUS_TOKEN': os.getenv('GENIUS_TOKEN')
 }
 
 songs = ["ENCINO", "BEN CARSON", "MICHIGAN", "INFATUATION", "BREAKFAST", "MOSSCLIFF", 
