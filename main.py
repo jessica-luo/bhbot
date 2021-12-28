@@ -61,3 +61,5 @@ def main():
     bio = twitter.update_profile(description="@BRCKHMPTN LYRICS. CURRENTLY: " + song)
 
     return tweetable_lyric, song
+
+main()
