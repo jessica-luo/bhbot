@@ -10,7 +10,8 @@ api_keys = {
     'CONSUMER_SECRET': os.getenv('CONSUMER_SECRET'),
     'ACCESS_TOKEN': os.getenv('ACCESS_TOKEN'),
     'ACCESS_SECRET': os.getenv('ACCESS_SECRET'),
-    'GENIUS_TOKEN': os.getenv('GENIUS_TOKEN')
+    'GENIUS_TOKEN': os.getenv('GENIUS_TOKEN'),
+    'CENSOR': os.getenv('CENSOR')
 }
 
 song_file = open("songs.txt", "r")
@@ -46,7 +47,7 @@ def get_song_lyrics():
     # choose 2 random lines to tweet
     random_num = random.randrange(0, len(filtered_lines)-1)
     tweetable_lyric = filtered_lines[random_num] + "\n" + filtered_lines[random_num+1]
-    tweetable_lyric = tweetable_lyric.replace("\\", "")
+    tweetable_lyric = tweetable_lyric.replace("\\", "").replace(api_keys["CENSOR"], '****')
 
     return tweetable_lyric, rand_song
 
