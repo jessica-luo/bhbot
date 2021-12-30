@@ -2,6 +2,7 @@ import random
 import lyricsgenius
 import tweepy
 import os
+import re
 
 api_keys = {
     'CONSUMER_KEY': os.getenv('CONSUMER_KEY'),
@@ -18,8 +19,9 @@ songs = list(map(lambda s: s.strip(), read_songs))
 def get_song_lyrics():
     genius = lyricsgenius.Genius(api_keys["GENIUS_TOKEN"])
     song = random.choice(songs)
-    lyrics = genius.search_song(song, "BROCKHAMPTON").lyrics
+    lyrics = genius.search_song(song, "BROCKHAMPTON").lyrics.replace("EmbedShare URLCopyEmbedCopy", "")
     lines = lyrics.split('\n')
+    lines[-1] = re.sub('[0-9]+', '', lines[-1])
 
     filtered_empty_lines = filter(lambda line: line != "", lines)
     filtered_verse_titles = filter(lambda line: "[" not in line, filtered_empty_lines)
