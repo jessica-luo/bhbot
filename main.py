@@ -5,7 +5,7 @@ import os
 import re
 import textwrap
 
-api_keys = {
+env = {
     'CONSUMER_KEY': os.getenv('CONSUMER_KEY'),
     'CONSUMER_SECRET': os.getenv('CONSUMER_SECRET'),
     'ACCESS_TOKEN': os.getenv('ACCESS_TOKEN'),
@@ -19,7 +19,7 @@ read_songs = song_file.readlines()
 songs = list(map(lambda s: s.strip(), read_songs))
 
 def get_song_lyrics():
-    genius = lyricsgenius.Genius(api_keys["GENIUS_TOKEN"])
+    genius = lyricsgenius.Genius(env["GENIUS_TOKEN"])
 
     # choose random song from songs.txt
     rand_song = random.choice(songs)
@@ -33,9 +33,11 @@ def get_song_lyrics():
     lyrics = genius.lyrics(None, 'https://genius.com/Brockhampton-' + song + '-lyrics', True)
 
     # remove footer
-    lyrics_replace_footer = lyrics.replace("EmbedShare URLCopyEmbedCopy", "")
+    lyrics_replace_footer = lyrics.replace("Embed", "")
     lines = lyrics_replace_footer.split('\n')
     lines[-1] = re.sub('[0-9]+', '', lines[-1])
+    # remove title
+    lines.pop(0)
 
     # remove empty lines
     filtered_empty_lines = filter(lambda line: line != "", lines)
@@ -47,19 +49,19 @@ def get_song_lyrics():
     # choose 2 random lines to tweet
     random_num = random.randrange(0, len(filtered_lines)-1)
     tweetable_lyric = filtered_lines[random_num] + "\n" + filtered_lines[random_num+1]
-    tweetable_lyric = tweetable_lyric.replace("\\", "").replace(api_keys["CENSOR"], '****')
+    tweetable_lyric = tweetable_lyric.replace("\\", "").replace(env["CENSOR"], '****')
 
     return tweetable_lyric, rand_song
 
 def main():
     auth = tweepy.OAuthHandler(
-        api_keys['CONSUMER_KEY'],
-        api_keys['CONSUMER_SECRET']
+        env['CONSUMER_KEY'],
+        env['CONSUMER_SECRET']
     )
 
     auth.set_access_token(
-        api_keys['ACCESS_TOKEN'],
-        api_keys['ACCESS_SECRET']
+        env['ACCESS_TOKEN'],
+        env['ACCESS_SECRET']
     )
 
     twitter = tweepy.API(auth)
