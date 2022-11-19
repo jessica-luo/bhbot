@@ -1,3 +1,4 @@
 config.py
 __pycache__
 localtest.py
+.DS_Store
